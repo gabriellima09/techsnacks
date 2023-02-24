@@ -7,9 +7,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 defaults:
   run:
@@ -20,7 +17,6 @@ jobs:
   # Filter to run only if backend API side has changes
   filter-api-changes:
     runs-on: windows-latest
-    name: Filter API Changes
     steps:
       - uses: actions/checkout@v3
         with:
@@ -44,6 +40,7 @@ jobs:
 
   build:
     runs-on: windows-latest
+    needs: filter-api-changes
     steps:
       - uses: actions/checkout@v3
 
