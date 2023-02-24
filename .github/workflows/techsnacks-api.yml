@@ -1,26 +1,51 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: techsnacks-api - Build and deploy ASP.Net Core app to Azure Web App
+name: techsnacks-api - Build/Deploy to Azure Web App
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'src/backend/**'
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 defaults:
   run:
     working-directory: 'src/backend/techsnacks/TechSnacks.API'
 
 jobs:
-  build:
-    runs-on: windows-latest    
-    
+
+  # Filter to run only if backend API side has changes
+  filter-api-changes:
+    runs-on: windows-latest
+    name: Filter API Changes
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files in the specified folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v34
+        with:
+          files: src/backend/**
+
+      - name: Run step if any file(s) in the docs folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: echo "techsnacks-api is affected"
+
+      - name: Prevent from running
+        if: steps.changed-files-specific.outputs.any_changed != 'true'
+        run: |          
+          echo "techsnacks-api is not affected"
+          exit
+
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
@@ -28,7 +53,7 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
-      - name: Build with dotnet
+      - name: dotnet build
         run: dotnet build --configuration Release
 
       - name: dotnet publish
