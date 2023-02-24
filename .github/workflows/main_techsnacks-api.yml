@@ -11,7 +11,7 @@ on:
 
 defaults:
   run:
-    working-directory: 'src/backend/techsnacks-api/TechSnacks.API'
+    working-directory: 'src/backend/techsnacks/TechSnacks.API'
 
 jobs:
   build:
