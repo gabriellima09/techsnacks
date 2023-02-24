@@ -41,6 +41,7 @@ jobs:
   build:
     runs-on: windows-latest
     needs: filter-api-changes
+    if: steps.changed-files-specific.outputs.any_changed == 'true'
     steps:
       - uses: actions/checkout@v3
 
