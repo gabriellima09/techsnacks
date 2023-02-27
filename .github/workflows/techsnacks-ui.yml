@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: ./dist/release.zip
+          path: src/frontend/techsnacks-ui/dist/release.zip
 
   deploy:
     runs-on: ubuntu-latest
