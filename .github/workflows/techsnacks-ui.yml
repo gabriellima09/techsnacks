@@ -10,7 +10,7 @@ on:
 
 defaults:
   run:
-    working-directory: 'src/frontend/techsnacks-ui'
+    working-directory: 'src\frontend\techsnacks-ui'
 
 jobs:
 
