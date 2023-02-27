@@ -6,7 +6,7 @@ name: techsnacks-api - Build/Deploy to Azure Web App
 on:
   push:
     branches: ['main']
-    paths: ['src/backend/**']
+    paths: ['src/backend/**', '.github/workflows/techsnacks-api.yml']
   workflow_dispatch:
 
 defaults:
