@@ -37,7 +37,9 @@ jobs:
           zip release.zip ./* -r
                 
       - name: check current folder
-        run: ls
+        run: |
+          - ls
+          - find ~
         
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
