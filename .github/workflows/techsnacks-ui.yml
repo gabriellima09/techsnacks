@@ -36,6 +36,9 @@ jobs:
           cd dist
           zip release.zip ./* -r
                 
+      - name: check current folder
+        run: ls
+        
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
@@ -56,9 +59,7 @@ jobs:
           name: node-app
           
       - name: unzip artifact for deployment
-        run: |
-          ls
-          unzip release.zip
+        run: unzip release.zip
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
