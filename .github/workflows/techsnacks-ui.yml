@@ -66,4 +66,4 @@ jobs:
           app-name: 'techsnacks'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ADB2A3EBF8074058B35E466B8161B92A }}
-          package: ./dist/techsnacks-ui
+          package: ./techsnacks-ui
