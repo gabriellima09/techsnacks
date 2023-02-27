@@ -31,7 +31,9 @@ jobs:
           npm run test -- --watch=false --browsers=ChromeHeadless
       
       - name: Zip artifact for deployment
-        run: Compress-Archive . release.zip
+        run: |
+          - dir
+          - Compress-Archive . release.zip          
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
