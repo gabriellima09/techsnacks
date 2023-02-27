@@ -25,7 +25,7 @@ jobs:
         id: changed-files-specific
         uses: tj-actions/changed-files@v34
         with:
-          files: src/frontend/techsnacks-ui/**
+          files: src/frontend/**
 
       - name: Run step if any file(s) in the docs folder change
         if: steps.changed-files-specific.outputs.any_changed == 'true'
