@@ -7,6 +7,7 @@ on:
   push:
     branches: ['main']
     paths: ['src/backend/**']
+  workflow_dispatch:
 
 defaults:
   run:
@@ -15,7 +16,7 @@ defaults:
 jobs:
 
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -62,5 +63,5 @@ jobs:
         with:
           app-name: 'techsnacks-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6B8A8BE7A69F435BAD189F875D6A2EF2 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_76015AD8A20A49F8A2BBBB0C622C6CAD }}
           package: .
