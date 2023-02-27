@@ -1,15 +1,42 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - techsnacks
+name: techsnacks-ui - Build/Deploy to Azure Web App
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: 'src/frontend/techsnacks-ui'
 
 jobs:
+  # Filter to run only if backend API side has changes
+  filter-api-changes:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files in the specified folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v34
+        with:
+          files: src/frontend/techsnacks-ui/**
+
+      - name: Run step if any file(s) in the docs folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: echo "techsnacks-ui is affected"
+
+      - name: Prevent from running
+        if: steps.changed-files-specific.outputs.any_changed != 'true'
+        run: |          
+          echo "techsnacks-ui is not affected"
+          exit
+
   build:
     runs-on: windows-latest
 
@@ -34,7 +61,7 @@ jobs:
           path: .
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
