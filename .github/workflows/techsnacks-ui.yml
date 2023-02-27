@@ -14,7 +14,7 @@ defaults:
 
 jobs:
   # Filter to run only if backend API side has changes
-  filter-api-changes:
+  filter-ui-changes:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -39,7 +39,8 @@ jobs:
 
   build:
     runs-on: windows-latest
-
+    needs: filter-ui-changes
+    if: needs.filter-ui-changes.steps.changed-files-specific.outputs.any_changed == 'true'
     steps:
       - uses: actions/checkout@v2
 
