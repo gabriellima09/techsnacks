@@ -5,8 +5,8 @@ name: techsnacks-api - Build/Deploy to Azure Web App
 
 on:
   push:
-    branches:
-      - main
+    branches: ['main']
+    paths: ['src/backend/**']
 
 defaults:
   run:
@@ -14,34 +14,8 @@ defaults:
 
 jobs:
 
-  # Filter to run only if backend API side has changes
-  filter-api-changes:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Get changed files in the specified folder
-        id: changed-files-specific
-        uses: tj-actions/changed-files@v34
-        with:
-          files: src/backend/**
-
-      - name: Run step if any file(s) in the docs folder change
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        run: echo "techsnacks-api is affected"
-
-      - name: Prevent from running
-        if: steps.changed-files-specific.outputs.any_changed != 'true'
-        run: |          
-          echo "techsnacks-api is not affected"
-          exit
-
   build:
     runs-on: windows-latest
-    needs: filter-api-changes
-    if: needs.filter-api-changes.steps.changed-files-specific.outputs.any_changed == 'true'
     steps:
       - uses: actions/checkout@v3
 
@@ -51,10 +25,16 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
-      - name: dotnet build
-        run: dotnet build --configuration Release
+      - name: install dependencies
+        run: dotnet restore
 
-      - name: dotnet publish
+      - name: build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: test
+        run: dotnet test --no-restore --verbosity normal
+
+      - name: publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/techsnacks-api
 
       - name: Upload artifact for deployment job
