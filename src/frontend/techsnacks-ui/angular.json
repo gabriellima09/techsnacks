@@ -8,9 +8,6 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -31,7 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/techsnacks-theme.scss"
             ],
             "scripts": []
           },
@@ -99,13 +96,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/techsnacks-theme.scss"
             ],
             "scripts": []
           }
         }
       }
     }
-  },
-  "defaultProject": "techsnacks-ui"
+  }
 }
