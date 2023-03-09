@@ -1,0 +1,29 @@
+name: techsnacks-ui - PR Check - Build/Deploy to Azure Web App
+
+on:
+  pull_request:
+    branches: ['main']
+    paths: ['src/frontend/**', '.github/workflows/techsnacks-ui.yml']
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: 'src/frontend/techsnacks-ui'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm run build
+          npm run test -- --watch=false --browsers=ChromeHeadless
