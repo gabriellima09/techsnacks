@@ -244,10 +244,10 @@ $altTheme: (
 );
 
 // Theme Init
-@include mat.all-component-typographies($typography);
 @include mat.all-component-themes($theme);
+@include mat.all-component-typographies($typography);
 
 .theme-alternate {
+  @include mat.all-component-colors($altTheme);
   @include mat.all-component-typographies($typography);
-  @include mat.all-component-themes($altTheme);
 }
