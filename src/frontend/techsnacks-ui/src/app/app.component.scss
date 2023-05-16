@@ -1,3 +1,7 @@
+mat-sidenav-container mat-sidenav {
+    min-width: 200px;
+}
+
 .logo {
     display: contents;
 }
@@ -6,4 +10,8 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.spacer {
+    flex: 1 1 auto;
 }
